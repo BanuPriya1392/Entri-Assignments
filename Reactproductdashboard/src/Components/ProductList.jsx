@@ -1,5 +1,5 @@
 import ProductCard from "./ProductCard";
-import products from "../Data/Products";
+import products from "../data/products";
 const ProductList = () => {
   return (
     <div className="container mx-auto px-4 pb-12">
