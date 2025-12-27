@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health & Wellness Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #e3f2fd 0%, #e8f5e9 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .chat-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #2196F3 0%, #4CAF50 100%);
+            color: white;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bot-avatar {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .chat-messages {
+            height: 450px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 20px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .bot-msg-avatar {
+            background: #e3f2fd;
+            color: #2196F3;
+        }
+
+        .user-msg-avatar {
+            background: #e8f5e9;
+            color: #4CAF50;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            margin: 0 10px;
+        }
+
+        .bot .message-content {
+            background: white;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .user .message-content {
+            background: linear-gradient(135deg, #2196F3 0%, #4CAF50 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .quick-questions {
+            padding: 15px 20px;
+            border-top: 1px solid #e0e0e0;
+            background: white;
+        }
+
+        .quick-btn {
+            margin: 5px;
+            border-radius: 20px;
+            font-size: 13px;
+            padding: 8px 15px;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .quick-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .quick-btn-water {
+            background: #e3f2fd;
+            color: #2196F3;
+        }
+
+        .quick-btn-exercise {
+            background: #e8f5e9;
+            color: #4CAF50;
+        }
+
+        .quick-btn-sleep {
+            background: #f3e5f5;
+            color: #9C27B0;
+        }
+
+        .quick-btn-nutrition {
+            background: #ffebee;
+            color: #f44336;
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .input-group input {
+            border-radius: 25px 0 0 25px;
+            border: 2px solid #e0e0e0;
+            padding: 12px 20px;
+        }
+
+        .input-group input:focus {
+            border-color: #2196F3;
+            box-shadow: none;
+        }
+
+        .btn-send {
+            border-radius: 0 25px 25px 0;
+            background: linear-gradient(135deg, #2196F3 0%, #4CAF50 100%);
+            border: none;
+            padding: 12px 25px;
+            color: white;
+        }
+
+        .btn-send:hover {
+            opacity: 0.9;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 10px;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #999;
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="bot-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div>
+                <h4 class="mb-0">Health & Wellness Assistant</h4>
+                <small>Your personal wellness guide</small>
+            </div>
+        </div>
+
+        <!-- Chat Messages -->
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-avatar bot-msg-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <div class="message-content">
+                        Hello! I'm your Health & Wellness Guide. I can help you with questions about hydration, exercise, sleep, and nutrition. How can I assist you today?
+                    </div>
+                    <div class="message-time" id="initialTime"></div>
+                </div>
+            </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="message-avatar bot-msg-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content bg-white">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Questions -->
+        <div class="quick-questions">
+            <small class="text-muted fw-bold">Quick questions:</small>
+            <div class="mt-2">
+                <button class="btn quick-btn quick-btn-water" onclick="setQuickQuestion('How much water should I drink?')">
+                    <i class="fas fa-tint"></i> How much water should I drink?
+                </button>
+                <button class="btn quick-btn quick-btn-exercise" onclick="setQuickQuestion('Exercise recommendations')">
+                    <i class="fas fa-dumbbell"></i> Exercise recommendations
+                </button>
+                <button class="btn quick-btn quick-btn-sleep" onclick="setQuickQuestion('How to sleep better?')">
+                    <i class="fas fa-moon"></i> How to sleep better?
+                </button>
+                <button class="btn quick-btn quick-btn-nutrition" onclick="setQuickQuestion('Healthy eating tips')">
+                    <i class="fas fa-apple-alt"></i> Healthy eating tips
+                </button>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input-area">
+            <div class="input-group">
+                <input type="text" class="form-control" id="userInput" 
+                       placeholder="Ask about hydration, exercise, sleep, or nutrition..." 
+                       onkeypress="handleKeyPress(event)">
+                <button class="btn btn-send" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i> Send
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize
+        document.getElementById('initialTime').textContent = getCurrentTime();
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function setQuickQuestion(question) {
+            document.getElementById('userInput').value = question;
+            document.getElementById('userInput').focus();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+
+            // Add user message
+            addMessage('user', message);
+            input.value = '';
+
+            // Show typing indicator
+            showTyping();
+
+            // Get bot response after delay
+            setTimeout(() => {
+                hideTyping();
+                const response = getResponse(message);
+                addMessage('bot', response);
+            }, 1000);
+        }
+
+        function addMessage(type, text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const avatar = type === 'bot' ? 
+                '<div class="message-avatar bot-msg-avatar"><i class="fas fa-robot"></i></div>' :
+                '<div class="message-avatar user-msg-avatar"><i class="fas fa-user"></i></div>';
+            
+            messageDiv.innerHTML = `
+                ${avatar}
+                <div>
+                    <div class="message-content">${text}</div>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').style.display = 'flex';
+            const messagesDiv = document.getElementById('chatMessages');
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        function getResponse(userInput) {
+            const input = userInput.toLowerCase();
+
+            // Hydration intents
+            if (input.includes('water') || input.includes('hydrat') || input.includes('drink')) {
+                if (input.includes('how much') || input.includes('how many')) {
+                    return 'You should aim to drink 8 glasses (about 2 liters) of water per day. However, this can vary based on your activity level, climate, and body size. Listen to your body and drink when you\'re thirsty!';
+                }
+                if (input.includes('benefit') || input.includes('why')) {
+                    return 'Water helps maintain body temperature, lubricates joints, protects tissues, helps eliminate waste, improves skin health, and boosts energy. Staying hydrated is essential for overall health!';
+                }
+                if (input.includes('dehydrat')) {
+                    return 'Signs of dehydration include: dark urine, dry mouth, fatigue, dizziness, and headaches. If you experience these, increase your water intake immediately!';
+                }
+                return 'Staying hydrated is crucial! Drink water regularly throughout the day. Would you like to know how much water you should drink daily?';
+            }
+
+            // Exercise intents
+            if (input.includes('exercise') || input.includes('workout') || input.includes('fitness') || input.includes('physical activity')) {
+                if (input.includes('how much') || input.includes('how long') || input.includes('how often')) {
+                    return 'Adults should aim for at least 150 minutes of moderate aerobic activity or 75 minutes of vigorous activity per week, plus muscle-strengthening activities 2+ days per week.';
+                }
+                if (input.includes('benefit') || input.includes('why')) {
+                    return 'Exercise improves heart health, strengthens muscles and bones, boosts mood, increases energy, helps maintain healthy weight, improves sleep, and reduces risk of chronic diseases!';
+                }
+                if (input.includes('type') || input.includes('which') || input.includes('what kind')) {
+                    return 'Great exercises include: walking, running, swimming, cycling, yoga, strength training, and dancing. Choose activities you enjoy so you\'ll stick with them!';
+                }
+                if (input.includes('beginner') || input.includes('start')) {
+                    return 'Start slow! Begin with 10-15 minutes of light activity like walking, gradually increase duration and intensity. Always warm up before and cool down after exercise.';
+                }
+                return 'Regular exercise is vital for health! It strengthens your body and mind. Would you like exercise recommendations?';
+            }
+
+            // Sleep intents
+            if (input.includes('sleep') || input.includes('rest') || input.includes('tired') || input.includes('insomnia')) {
+                if (input.includes('how much') || input.includes('how long') || input.includes('how many hours')) {
+                    return 'Adults need 7-9 hours of sleep per night. Teenagers need 8-10 hours, and children need even more. Quality matters as much as quantity!';
+                }
+                if (input.includes('benefit') || input.includes('why') || input.includes('important')) {
+                    return 'Sleep helps your body repair itself, strengthens your immune system, improves memory and concentration, regulates mood, and supports healthy growth and development.';
+                }
+                if (input.includes('better') || input.includes('improve') || input.includes('tips') || input.includes('help')) {
+                    return 'Sleep tips: Keep a consistent schedule, avoid screens 1 hour before bed, keep your room cool and dark, avoid caffeine late in the day, and create a relaxing bedtime routine.';
+                }
+                if (input.includes('can\'t') || input.includes('difficult') || input.includes('problem')) {
+                    return 'If you have trouble sleeping, try: establishing a regular schedule, avoiding naps, exercising earlier in the day, and creating a calm bedroom environment. If problems persist, consult a doctor.';
+                }
+                return 'Good sleep is essential for health! Adults need 7-9 hours nightly. Want tips for better sleep?';
+            }
+
+            // Nutrition intents
+            if (input.includes('nutrition') || input.includes('food') || input.includes('eat') || input.includes('diet') || input.includes('meal')) {
+                if (input.includes('healthy') || input.includes('what') || input.includes('should')) {
+                    return 'A healthy diet includes: fruits and vegetables, whole grains, lean proteins, healthy fats, and limited processed foods. Aim for variety and colorful plates!';
+                }
+                if (input.includes('benefit') || input.includes('why')) {
+                    return 'Good nutrition provides energy, supports growth and repair, strengthens immunity, maintains healthy weight, improves mood, and reduces disease risk!';
+                }
+                if (input.includes('protein')) {
+                    return 'Good protein sources include: chicken, fish, eggs, beans, lentils, tofu, Greek yogurt, and nuts. Protein helps build and repair tissues!';
+                }
+                if (input.includes('fruit') || input.includes('vegetable')) {
+                    return 'Aim for 5 servings of fruits and vegetables daily. They\'re packed with vitamins, minerals, and fiber. Eat a rainbow of colors for maximum benefits!';
+                }
+                if (input.includes('breakfast')) {
+                    return 'Breakfast jumpstarts your metabolism! Good options: oatmeal with fruit, eggs with whole grain toast, Greek yogurt with berries, or a smoothie with protein.';
+                }
+                return 'Balanced nutrition fuels your body! Eat a variety of whole foods including fruits, vegetables, proteins, and whole grains. What aspect interests you?';
+            }
+
+            // Greetings
+            if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
+                return 'Hello! I\'m here to help with your health and wellness questions. Ask me about hydration, exercise, sleep, or nutrition!';
+            }
+
+            // Thanks
+            if (input.includes('thank') || input.includes('thanks')) {
+                return 'You\'re welcome! I\'m here anytime you need health and wellness advice. Stay healthy! 💪';
+            }
+
+            // Help
+            if (input.includes('help') || input.includes('what can you')) {
+                return 'I can help you with:<br>💧 Hydration - water intake and benefits<br>🏃 Exercise - workout tips and recommendations<br>😴 Sleep - improving sleep quality<br>🥗 Nutrition - healthy eating habits<br><br>Just ask me anything about these topics!';
+            }
+
+            // Default fallback
+            return 'I\'m here to help with hydration, exercise, sleep, and nutrition questions. Could you please rephrase your question or ask about one of these topics?';
+        }
+    </script>
+</body>
+</html>

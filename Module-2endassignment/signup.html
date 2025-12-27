@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Tourist App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h2>Create Account</h2>
+            <form id="signupForm">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="fullname" placeholder="Banu priya">
+                    <small class="error-msg">Error message</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="example@mail.com">
+                    <small class="error-msg">Error message</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="number" id="phone" placeholder="10 digit number">
+                    <small class="error-msg">Error message</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Location/City</label>
+                    <input type="text" id="city" placeholder="New York">
+                    <small class="error-msg">Error message</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="8+ chars, letters & numbers">
+                        <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('password', this)"></i>
+                    </div>
+                    <small class="error-msg">Error message</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="confirm-password" placeholder="Repeat Password">
+                        <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('confirm-password', this)"></i>
+                    </div>
+                    <small class="error-msg">Error message</small>
+                </div>
+
+                <button type="submit" class="btn">Sign Up</button>
+                <p class="switch-page">Already have an account? <a href="index.html">Sign In</a></p>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

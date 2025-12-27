@@ -1,0 +1,90 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #333;
+  color: white;
+}
+
+.nav-links a {
+  color: white;
+  margin-left: 1rem;
+  text-decoration: none;
+}
+
+/* Requirement: Highlight the active route */
+.nav-links a.active-link {
+  color: #00d8ff;
+  border-bottom: 2px solid #00d8ff;
+  padding-bottom: 5px;
+}
+
+.user-card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.view-btn,
+.back-btn {
+  background: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Ensure the browser uses the full width/height of the screen */
+body,
+html,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* This is the magic wrapper that centers your pages */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Horizontal centering */
+  justify-content: flex-start;
+  width: 100%; /* Needs to be 100% to center items within it */
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+.navbar {
+  width: 100%;
+  background-color: #222;
+  color: white;
+  display: flex;
+  justify-content: center; /* Centers the links inside the bar */
+  gap: 30px; /* Adds space between Home, About, Users */
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+}
+.user-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 600px; /* Prevents the list from getting too wide on desktop */
+}
+
+.user-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Adds a nice subtle shadow */
+}

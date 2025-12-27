@@ -1,0 +1,943 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banupriya | Full Stack Developer Portfolio</title>
+    <!-- Load Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. GLOBAL STYLES & VARIABLES --- */
+        :root {
+            --color-primary: #10b981; /* Emerald Green */
+            --color-secondary: #1f2937; /* Dark Slate */
+            --color-card-bg: #374151;
+            --color-text-light: #f3f4f6;
+            --header-height: 64px; /* 4rem */
+        }
+
+        body {
+            background-color: var(--color-secondary);
+            color: var(--color-text-light);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Adjust padding for sections to account for fixed header */
+        main section {
+            padding: 5rem 0 3rem; 
+        }
+        
+        h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--color-primary);
+        }
+
+        /* --- 2. HEADER & NAVIGATION --- */
+        .main-header {
+            background-color: var(--color-secondary);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--header-height);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--color-text-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .contact-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .contact-button:hover {
+            background-color: var(--color-primary);
+            color: var(--color-secondary);
+        }
+
+        /* Mobile Menu Setup */
+        .mobile-menu-button {
+            display: none; /* Hidden on desktop */
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-text-light);
+            padding: 0.5rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            background-color: var(--color-secondary);
+            border-top: 1px solid #4b5563;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 0.5rem;
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin: 0.25rem 0;
+            border-radius: 6px;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--color-primary);
+        }
+
+        /* --- 3. HERO SECTION --- */
+        .hero-section {
+            background-image: url('https://placehold.co/1920x1080/1f2937/ffffff?text=Developer+Workspace');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: var(--header-height);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6); /* Dark overlay */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 3rem;
+            border-radius: 12px;
+            background-color: rgba(31, 41, 55, 0.8); /* Semi-transparent background */
+            max-width: 90%;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .hero-button {
+            margin-top: 2rem;
+            display: inline-block;
+            background-color: var(--color-primary);
+            color: var(--color-secondary);
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px; /* Fully rounded */
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .hero-button:hover {
+            transform: scale(1.05);
+            background-color: var(--color-text-light);
+        }
+
+        /* --- 4. ABOUT SECTION --- */
+        .about-layout {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            flex-direction: column; /* Stacked on mobile */
+        }
+
+        .about-image-wrapper {
+            flex-shrink: 0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .about-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border: 4px solid rgba(16, 185, 129, 0.5);
+        }
+
+        .about-content {
+            flex-grow: 1;
+            padding: 1rem 0;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            color: #ccc;
+        }
+        
+        .contact-link {
+            display: inline-block;
+            color: var(--color-primary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--color-primary);
+            transition: color 0.3s, border-color 0.3s;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .contact-link:hover {
+            color: var(--color-text-light);
+            border-color: var(--color-text-light);
+        }
+
+        /* --- 5. SKILLS SECTION --- */
+        .skills-section {
+            background-color: var(--color-card-bg);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column on mobile */
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background-color: var(--color-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .skill-card:hover {
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .skill-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+            text-align: left;
+        }
+
+        .skill-item {
+            margin-bottom: 1rem;
+        }
+
+        .skill-item p {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+            color: #9ca3af;
+        }
+
+        .skill-bar-container {
+            width: 100%;
+            background-color: #4b5563;
+            border-radius: 9999px;
+            height: 0.625rem;
+        }
+
+        .skill-bar-fill {
+            background-color: var(--color-primary);
+            height: 0.625rem;
+            border-radius: 9999px;
+            transition: width 1s ease-in-out;
+        }
+
+        /* --- 6. PROJECTS & BLOG SECTIONS --- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column on mobile */
+            gap: 2.5rem;
+        }
+
+        .project-card, .blog-article {
+            background-color: var(--color-card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        
+        .project-card:hover {
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.7);
+            transform: translateY(-4px);
+        }
+
+        .blog-article {
+            padding: 1.5rem;
+            background-color: var(--color-secondary);
+        }
+        
+        .blog-article:hover {
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 12rem; /* h-48 */
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3, .blog-article h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: white;
+        }
+
+        .project-content p, .blog-article p {
+            color: #9ca3af;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .tag {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--color-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+        }
+        
+        .blog-article .tag {
+            background-color: #4b5563;
+            color: #9ca3af;
+        }
+
+        .link-group a {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .link-group a:hover {
+            color: white;
+        }
+
+        .link-group {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+
+        /* --- 7. CONTACT SECTION --- */
+        .contact-content {
+            max-width: 48rem;
+            margin: 0 auto;
+            background-color: var(--color-card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .contact-content p {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #ccc;
+            margin-bottom: 0.25rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--color-secondary);
+            border: 1px solid #4b5563;
+            border-radius: 8px;
+            color: white;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+        }
+
+        .form-submit-button {
+            width: 100%;
+            background-color: var(--color-primary);
+            color: var(--color-secondary);
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .form-submit-button:hover {
+            background-color: var(--color-text-light);
+            transform: scale(1.02);
+        }
+
+        /* --- 8. FOOTER --- */
+        .main-footer {
+            background-color: var(--color-secondary);
+            border-top: 1px solid #374151;
+            padding: 1.5rem 0;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        .social-links {
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: #9ca3af;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--color-primary);
+        }
+
+        /* --- 9. MEDIA QUERIES (RESPONSIVENESS) --- */
+
+        /* Tablet and Larger (md: equivalent) */
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .hero-content h1 {
+                font-size: 6rem;
+            }
+
+            .hero-content p {
+                font-size: 2rem;
+            }
+
+            .about-layout {
+                flex-direction: row; /* Horizontal layout */
+            }
+
+            .about-image-wrapper {
+                width: 33.333%;
+                max-width: none;
+            }
+
+            .about-content {
+                width: 66.666%;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        /* Desktop and Larger (lg: equivalent) */
+        @media (min-width: 1024px) {
+            .container {
+                padding: 0 2rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .card-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Mobile Specific Styles (md: hidden equivalent) */
+        @media (max-width: 767px) {
+            .nav-links {
+                display: none; /* Hide desktop links */
+            }
+
+            .mobile-menu-button {
+                display: block; /* Show mobile menu button */
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content p {
+                font-size: 1.125rem;
+            }
+            
+            h2 {
+                font-size: 2.5rem;
+                margin-bottom: 3rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-secondary text-text-light font-sans">
+
+    <!-- HEADER & NAVIGATION -->
+    <header class="main-header">
+        <nav class="container navbar">
+            <!-- Logo/Name -->
+            <a href="#hero-section" class="logo">Banupriya</a>
+            
+            <!-- Desktop Navigation Links -->
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#blog">Blog</a>
+                <a href="#contact" class="contact-button">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="mobile-menu-button" aria-label="Toggle menu">
+                <svg class="w-6 h-6" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu (initially hidden by CSS) -->
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#blog">Blog</a>
+            <a href="#contact" class="contact-button">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. HERO SECTION -->
+        <section id="hero-section" class="hero-section">
+            <div class="hero-content">
+                <h1>Banupriya</h1>
+                <p>Full Stack Web Developer | MERN Stack</p>
+                <a href="#projects" class="hero-button">View My Work</a>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT SECTION -->
+        <section id="about">
+            <div class="container">
+                <h2>About Me</h2>
+                
+                <article class="about-layout">
+                    <!-- Profile Image -->
+                    <div class="about-image-wrapper">
+                        <img src="banu.jpg" alt="Profile Photo of Banu" class="about-image">
+                    </div>
+                    
+                    <!-- Text Content -->
+                    <div class="about-content">
+                        <p>
+                            Hello! I'm Banu, a passionate Full Stack Developer specializing in the **MERN stack (MongoDB, Express, React, Node.js)**. My journey began 5 years ago, and I thrive on turning complex problems into elegant, efficient, and user-friendly applications.
+                        </p>
+                        <p>
+                            I focus on writing clean, maintainable code and always push for best practices in performance and scalability. Beyond the MERN stack, I have professional experience with Python/Django and deploying applications using Docker and AWS. I'm currently seeking new challenges where I can contribute to impactful projects.
+                        </p>
+                        <p style="font-weight: 600;">
+                            Let's build something amazing together!
+                        </p>
+                        <a href="#contact" class="contact-link">
+                            Get in Touch &rarr;
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 3. SKILLS SECTION -->
+        <section id="skills" class="skills-section">
+            <div class="container">
+                <h2>Technical Skills</h2>
+                
+                <div class="skills-grid">
+                    <!-- Skill Card 1: Frontend -->
+                    <div class="skill-card">
+                        <h3>Frontend Development</h3>
+                        <div class="skill-group">
+                            <!-- Skill Item -->
+                            <div class="skill-item">
+                                <p><span>React / Next.js</span><span>95%</span></p>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar-fill" style="width: 95%;"></div>
+                                </div>
+                            </div>
+                            <!-- Skill Item -->
+                            <div class="skill-item">
+                                <p><span>JavaScript (ES6+) / TypeScript</span><span>90%</span></p>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar-fill" style="width: 90%;"></div>
+                                </div>
+                            </div>
+                            <!-- Skill Item -->
+                            <div class="skill-item">
+                                <p><span>HTML5 / CSS3 / Vanilla CSS</span><span>98%</span></p>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar-fill" style="width: 98%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Skill Card 2: Backend -->
+                    <div class="skill-card">
+                        <h3>Backend Development</h3>
+                        <div class="skill-group">
+                            <!-- Skill Item -->
+                            <div class="skill-item">
+                                <p><span>Node.js / Express</span><span>85%</span></p>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar-fill" style="width: 85%;"></div>
+                                </div>
+                            </div>
+                            <!-- Skill Item -->
+                            <div class="skill-item">
+                                <p><span>Python / Django / Flask</span><span>75%</span></p>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar-fill" style="width: 75%;"></div>
+                                </div>
+                            </div>
+                            <!-- Skill Item -->
+                            <div class="skill-item">
+                                <p><span>RESTful API Design</span><span>90%</span></p>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar-fill" style="width: 90%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Card 3: Database & DevOps -->
+                    <div class="skill-card">
+                        <h3>Databases & DevOps</h3>
+                        <div class="skill-group">
+                            <!-- Skill Item -->
+                            <div class="skill-item">
+                                <p><span>MongoDB / PostgreSQL</span><span>88%</span></p>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar-fill" style="width: 88%;"></div>
+                                </div>
+                            </div>
+                            <!-- Skill Item -->
+                            <div class="skill-item">
+                                <p><span>Git / GitHub / Version Control</span><span>95%</span></p>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar-fill" style="width: 95%;"></div>
+                                </div>
+                            </div>
+                            <!-- Skill Item -->
+                            <div class="skill-item">
+                                <p><span>Docker / AWS (EC2, S3)</span><span>70%</span></p>
+                                <div class="skill-bar-container">
+                                    <div class="skill-bar-fill" style="width: 70%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PROJECTS SECTION -->
+        <section id="projects">
+            <div class="container">
+                <h2>Featured Projects</h2>
+                
+                <div class="card-grid">
+                    <!-- Project Card 1: E-commerce Platform -->
+                    <div class="project-card">
+                        <img src="https://placehold.co/600x400/374151/ffffff?text=E-Commerce+App" alt="E-commerce Project Thumbnail" class="project-image">
+                        <div class="project-content">
+                            <h3>MERN E-Commerce Platform</h3>
+                            <p>
+                                Full-featured site with user authentication, product catalog, cart management, and Stripe integration. Built with React and Redux on the frontend, and Node/Express on the backend.
+                            </p>
+                            <div class="tag-list">
+                                <span class="tag">React</span>
+                                <span class="tag">Node.js</span>
+                                <span class="tag">MongoDB</span>
+                            </div>
+                            <div class="link-group">
+                                <a href="https://github.com/project-link-1" target="_blank">GitHub &rarr;</a>
+                                <a href="#" target="_blank">Live Demo &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2: Real-time Chat App -->
+                    <div class="project-card">
+                        <img src="https://placehold.co/600x400/374151/ffffff?text=Chat+Application" alt="Chat App Project Thumbnail" class="project-image">
+                        <div class="project-content">
+                            <h3>Real-time Chat Application</h3>
+                            <p>
+                                A single-page application enabling real-time messaging between users. Utilizes WebSockets via Socket.io for instant data transfer.
+                            </p>
+                            <div class="tag-list">
+                                <span class="tag">React</span>
+                                <span class="tag">Socket.io</span>
+                                <span class="tag">Express</span>
+                            </div>
+                            <div class="link-group">
+                                <a href="https://github.com/project-link-2" target="_blank">GitHub &rarr;</a>
+                                <a href="#" target="_blank">Live Demo &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3: Data Visualization Dashboard -->
+                    <div class="project-card">
+                        <img src="https://placehold.co/600x400/374151/ffffff?text=Dashboard+UI" alt="Dashboard Project Thumbnail" class="project-image">
+                        <div class="project-content">
+                            <h3>Data Visualization Dashboard</h3>
+                            <p>
+                                Responsive dashboard interface for visualizing large datasets using D3.js and React. Features dynamic charts and filtering capabilities.
+                            </p>
+                            <div class="tag-list">
+                                <span class="tag">React</span>
+                                <span class="tag">D3.js</span>
+                                <span class="tag">API</span>
+                            </div>
+                            <div class="link-group">
+                                <a href="https://github.com/project-link-3" target="_blank">GitHub &rarr;</a>
+                                <a href="#" target="_blank">Live Demo &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. BLOG SECTION -->
+        <section id="blog" class="skills-section">
+            <div class="container">
+                <h2>Latest Insights</h2>
+                
+                <div class="card-grid">
+                    <!-- Blog Article 1 -->
+                    <article class="blog-article">
+                        <h3>The Power of Context Hooks in React</h3>
+                        <p>
+                            A deep dive into managing global state without prop drilling. Includes best practices and performance considerations for large apps.
+                        </p>
+                        <div class="tag-list">
+                            <span class="tag">#React</span>
+                            <span class="tag">#Hooks</span>
+                            <span class="tag">#StateMgmt</span>
+                        </div>
+                        <a href="#" class="contact-link" style="border-bottom: none; margin-top: 1rem;">Read More &rarr;</a>
+                    </article>
+
+                    <!-- Blog Article 2 -->
+                    <article class="blog-article">
+                        <h3>Optimizing Node.js Performance with Worker Threads</h3>
+                        <p>
+                            How to leverage Node's built-in modules to handle CPU-intensive tasks and prevent blocking the main event loop.
+                        </p>
+                        <div class="tag-list">
+                            <span class="tag">#NodeJS</span>
+                            <span class="tag">#Backend</span>
+                            <span class="tag">#Performance</span>
+                        </div>
+                        <a href="#" class="contact-link" style="border-bottom: none; margin-top: 1rem;">Read More &rarr;</a>
+                    </article>
+                    
+                    <!-- Blog Article 3 -->
+                    <article class="blog-article">
+                        <h3>Vanilla CSS vs. Tailwind: The Productivity Debate</h3>
+                        <p>
+                            A look at utility-first CSS, comparing the development speed and maintenance overhead of Tailwind against writing pure, modular CSS.
+                        </p>
+                        <div class="tag-list">
+                            <span class="tag">#CSS</span>
+                            <span class="tag">#Vanilla</span>
+                            <span class="tag">#Design</span>
+                        </div>
+                        <a href="#" class="contact-link" style="border-bottom: none; margin-top: 1rem;">Read More &rarr;</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 6. CONTACT SECTION -->
+        <section id="contact">
+            <div class="container">
+                <h2>Get In Touch</h2>
+                
+                <div class="contact-content">
+                    <p>
+                        I'm currently available for full-time roles and freelance projects. Send me a message!
+                    </p>
+                    <form id="contact-form" class="contact-form">
+                        <!-- Name Input (Required HTML5 validation) -->
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your Full Name">
+                        </div>
+                        <!-- Email Input (Required HTML5 validation) -->
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        </div>
+                        <!-- Message Input (Required HTML5 validation) -->
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="4" required placeholder="How can I help you?"></textarea>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <button type="submit" class="form-submit-button">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Banupriya Portfolio. All rights reserved.</p>
+            <div class="social-links">
+                <!-- Replace with actual SVG icons or text links -->
+                <a href="https://linkedin.com/in/yourprofile" target="_blank" aria-label="LinkedIn">LinkedIn</a>
+                <a href="https://github.com/yourprofile" target="_blank" aria-label="GitHub">GitHub</a>
+                <a href="mailto:youremail@example.com" aria-label="Email">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            // Toggle the display property
+            if (menu.style.display === 'flex' || menu.style.display === '') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'flex';
+                menu.style.flexDirection = 'column';
+                menu.style.alignItems = 'center';
+            }
+        });
+
+        // Close mobile menu on link click (improves UX)
+        const mobileLinks = document.querySelectorAll('#mobile-menu a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').style.display = 'none';
+            });
+        });
+
+        // Basic Contact Form Submission handling (prevents default submit)
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // In a real application, you would send this data to a server.
+            console.log('Form Submitted (client-side validation passed)');
+            alert('Thank you for your message! I will get back to you shortly.'); // Use alert only for this simple example since we can't show a custom modal without more files.
+            this.reset();
+        });
+    </script>
+</body>
+</html>

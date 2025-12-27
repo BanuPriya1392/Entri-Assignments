@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Chatbot Landing Page</title>
+    <style>
+        /* Base Styles (Desktop/Tablet First) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background effect */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            z-index: 1;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            font-size: 2.5em;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #f0e6ff;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+
+        .content-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+            box-sizing: border-box;
+            text-align: center;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .content-box h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .content-box p {
+            color: #4a5568;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+
+        /* 🎨 Dialogflow Messenger Customization */
+        df-messenger {
+            --df-messenger-button-titlebar-color: #667eea;
+            --df-messenger-button-titlebar-font-color: white;
+            --df-messenger-chat-background-color: #f7fafc;
+            --df-messenger-input-box-color: #ffffff;
+            --df-messenger-font-family: 'Verdana', sans-serif;
+            --df-messenger-bot-message-background-color: #e6f0ff;
+            --df-messenger-bot-message-font-color: #2d3748;
+            --df-messenger-user-message-background-color: #667eea;
+            --df-messenger-user-message-font-color: white;
+
+            /* Fixed Placement */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        /* ------------------------------------------- */
+        /* 📱 CSS3 Media Queries for Responsiveness */
+        /* ------------------------------------------- */
+
+        /* Adjustment for screens smaller than 768px (Common tablet portrait) */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header p {
+                font-size: 0.9em;
+            }
+
+            .content-box {
+                padding: 20px;
+                border-radius: 15px;
+                max-width: 95%;
+                margin: 0 10px;
+            }
+
+            .content-box h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        /* Adjustment for screens smaller than 480px (Common phone portrait) */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5em;
+                padding: 10px 0;
+            }
+
+            .content-box {
+                padding: 15px;
+                font-size: 0.9em;
+            }
+
+            .content-box h2 {
+                font-size: 1.3em;
+            }
+            
+            /* Adjust the chatbot floating position for mobile */
+            df-messenger {
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AI Chatbot</h1>
+        <p>Your creative gateway to instant answers.</p>
+    </div>
+
+    <div class="content-box">
+        <h2>We're here to help!</h2>
+        <p>Click the chat icon below to start a conversation with our intelligent assistant.</p>
+    </div>
+
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="HealthandWellnessChatbot"
+  agent-id="3f2b69b4-e3c9-49d2-b90e-e178f50aaa56"
+  language-code="en"
+></df-messenger>
+</body>
+</html>
