@@ -5,7 +5,7 @@ const products = [
     price: 90000,
     category: "Electronics",
     inStock: true,
-    image: "src/assets/laptop.jpg",
+    image: "/laptop.jpg",
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ const products = [
     price: 5500,
     category: "Clothing",
     inStock: false,
-    image: "src/assets/Frock.jpg",
+    image: "/Frock.jpg",
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ const products = [
     price: 3000,
     category: "Books",
     inStock: true,
-    image: "src/assets/Books2.jpg",
+    image: "/Books2.jpg",
   },
   {
     id: 4,
@@ -29,7 +29,7 @@ const products = [
     price: 5200,
     category: "Electronics",
     inStock: true,
-    image: "src/assets/Headset.jpg",
+    image: "/Headset.jpg",
   },
   {
     id: 5,
@@ -37,7 +37,7 @@ const products = [
     price: 2200,
     category: "Clothing",
     inStock: false,
-    image: "src/assets/Shoes.jpg",
+    image: "/Shoes.jpg",
   },
   {
     id: 6,
@@ -45,7 +45,7 @@ const products = [
     price: 1500,
     category: "Bags",
     inStock: true,
-    image: "src/assets/Handbag.jpg",
+    image: "/Handbag.jpg",
   },
 ];
 
