@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ProductCard from "./ProductCard";
-import products from "../Data/products";
+import products from "../data/products";
 
 const ProductList = () => {
   // 1. State for both category and search query
