@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Arithmetic Calculator </title>
+    
+    <style>
+        /* General Setup */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcf6ff; /* Very light purple/off-white background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+            margin: 0;
+        }
+
+        /* Calculator Container */
+        .calculator-body {
+            background-color: white;
+            padding: 32px;
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Softer shadow */
+            border: 4px solid #d8b4fe; /* Light Purple Border */
+        }
+        
+        .calculator-body h1 {
+            font-size: 1.875rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 24px;
+            color: #2286ae; /* Dark Purple text for contrast */
+        }
+
+        /* Display Area */
+        .display-container {
+            grid-column: 1 / -1;
+        }
+        
+        #display {
+            width: 90%;
+            height: 80px;
+            text-align: right;
+            font-size: 2.25rem;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            border: 4px solid #e9d5ff; /* Very Light Purple Display Border */
+            background-color: #fefcfc; 
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Calculator Grid Layout */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 380px;
+            width: 100%;
+        }
+
+        /* Button Base Style */
+        .btn {
+            padding: 16px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.15s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            user-select: none;
+            cursor: pointer;
+            border: none;
+        }
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Specific Button Styles */
+        .digit {
+            background-color: white;
+            color: #1f2937; /* Dark Gray text */
+        }
+        .digit:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .operator {
+            background-color: #f472b6; /* Medium Baby Pink Operators */
+            color: white;
+        }
+        .operator:hover {
+            background-color: #f9a8d4; /* Lighter Pink Hover */
+        }
+        
+        .function-btn {
+            background-color: #e879f9; /* Light Purple/Pink Functions (AC, DEL, x², x³) */
+            color: #4a007a; /* Dark Purple Text */
+        }
+        .function-btn:hover {
+            background-color: #d8b4fe; /* Slightly Darker Light Purple Hover */
+        }
+        
+        .equals-btn {
+            background-color: #6854a7; /* Light Purple Equals Button */
+            color: white;
+            grid-column: span 2;
+        }
+        .equals-btn:hover {
+            background-color: hsl(308, 48%, 61%); /* Slightly Darker Purple Hover */
+        }
+        
+        /* Responsiveness adjustments */
+        @media (max-width: 450px) {
+             .calculator-grid {
+                gap: 8px;
+            }
+            .btn {
+                padding: 12px;
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator-body">
+    <h1> Calculator</h1>
+    <div class="calculator-grid">
+
+        <div class="display-container">
+            <input type="text" id="display" value="0" readonly>
+        </div>
+
+        <button id="clear" class="btn function-btn" data-action="clear">AC</button>
+        <button id="sq" class="btn function-btn" data-value="sq(">x²</button>
+        <button id="cu" class="btn function-btn" data-value="cu(">x³</button>
+        <button class="btn operator" data-value="/">/</button>
+
+        <button class="btn digit" data-value="7">7</button>
+        <button class="btn digit" data-value="8">8</button>
+        <button class="btn digit" data-value="9">9</button>
+        <button class="btn operator" data-value="*">×</button>
+        
+        <button class="btn digit" data-value="4">4</button>
+        <button class="btn digit" data-value="5">5</button>
+        <button class="btn digit" data-value="6">6</button>
+        <button class="btn operator" data-value="-">-</button>
+
+        <button class="btn digit" data-value="1">1</button>
+        <button class="btn digit" data-value="2">2</button>
+        <button class="btn digit" data-value="3">3</button>
+        <button class="btn operator" data-value="+">+</button>
+
+        <button class="btn digit" data-value="0">0</button>
+        <button class="btn digit" data-value=".">.</button>
+        <button id="del" class="btn function-btn" data-action="delete">DEL</button>
+        <button id="equals" class="btn equals-btn" data-action="calculate">=</button>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const display = document.getElementById('display');
+        const buttons = document.querySelectorAll('.btn');
+        let currentInput = '0'; // Stores the current number or expression
+        let isResult = false; // Tracks if the display shows the result of a calculation
+
+        // Function to update the display
+        const updateDisplay = (value) => {
+            display.value = value;
+            currentInput = value;
+        };
+
+        // Function to sanitize and evaluate the expression (the core math)
+        const evaluateExpression = (expr) => {
+            try {
+                // IMPORTANT: eval() is powerful but dangerous in non-calculator apps.
+                // For a simple calculator, it is the most direct way to get a result.
+                let result = eval(expr); 
+
+                if (isNaN(result) || !isFinite(result)) {
+                    throw new Error("Invalid calculation or result.");
+                }
+
+                // Limit decimal places for a cleaner display
+                if (result.toString().includes('.')) {
+                    result = parseFloat(result.toFixed(10));
+                }
+                
+                return result.toString();
+            } catch (error) {
+                console.error("Evaluation Error:", error);
+                return 'Error';
+            }
+        };
+
+        // Event listener for all calculator buttons
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.dataset.value;
+                const action = button.dataset.action;
+                
+                // --- Handle Actions (Clear, Delete, Calculate) ---
+                if (action === 'clear') {
+                    updateDisplay('0');
+                    isResult = false;
+                    return;
+                }
+
+                if (action === 'delete') {
+                    if (currentInput === 'Error' || currentInput === '0' || isResult) {
+                        updateDisplay('0');
+                    } else {
+                        // Remove the last character
+                        currentInput = currentInput.slice(0, -1);
+                        if (currentInput.length === 0) {
+                            updateDisplay('0');
+                        } else {
+                            updateDisplay(currentInput);
+                        }
+                    }
+                    isResult = false;
+                    return;
+                }
+
+                if (action === 'calculate') {
+                    // Calculate the result and update the display
+                    const result = evaluateExpression(currentInput);
+                    updateDisplay(result);
+                    isResult = true;
+                    return;
+                }
+                
+                // --- Handle Simple Functions (x², x³) ---
+                // For simplicity, these actions will calculate based on the current display
+                if (button.id === 'sq' || button.id === 'cu') {
+                    if (currentInput === 'Error') return;
+
+                    try {
+                        let num = parseFloat(evaluateExpression(currentInput));
+                        let result;
+                        if (button.id === 'sq') {
+                            result = Math.pow(num, 2);
+                        } else { // 'cu'
+                            result = Math.pow(num, 3);
+                        }
+                        updateDisplay(result.toString());
+                        isResult = true;
+                    } catch (e) {
+                        updateDisplay('Error');
+                        isResult = true;
+                    }
+                    return;
+                }
+
+                // --- Handle Number/Operator Input ---
+                
+                if (isResult) {
+                    // If the last entry was a result, start a new calculation
+                    // only if the new input is NOT an operator.
+                    const isOperator = ['+', '-', '*', '/'].includes(value);
+                    if (!isOperator) {
+                        currentInput = (value === '.') ? '0.' : value;
+                    } else {
+                        // If it is an operator, continue the calculation with the result
+                        currentInput += value;
+                    }
+                    isResult = false;
+                } else if (currentInput === '0' && value !== '.') {
+                    // Start a new expression if the current display is '0'
+                    currentInput = value;
+                } else if (currentInput === 'Error') {
+                    // Start a new expression if the current display is 'Error'
+                    currentInput = value;
+                } else {
+                    // Append the new value to the current expression
+                    currentInput += value;
+                }
+
+                updateDisplay(currentInput);
+                isResult = false;
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

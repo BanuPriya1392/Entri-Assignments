@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        input { padding: 8px; margin-bottom: 10px; }
+        button { padding: 10px 15px; cursor: pointer; }
+        #result { margin-top: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Simple Grade Calculator</h1>
+    <label for="scoreInput">Enter Score:</label>
+    <input type="number" id="scoreInput" min="0" max="100">
+    <button onclick="getGrade()">Calculate Grade</button>
+    <div id="result"></div>
+
+    <script>
+        async function getGrade() {
+            const score = document.getElementById('scoreInput').value;
+            if (score === "" || isNaN(score) || score < 0 || score > 100) {
+                document.getElementById('result').innerText = "Please enter a valid score between 0 and 100.";
+                return;
+            }
+
+            // In a real full-stack app, this would be an API call to your Java backend
+            // For this simple example, we'll simulate the Java logic in JavaScript
+            let grade;
+            if (score >= 90) {
+                grade = "A";
+            } else if (score >= 80) {
+                grade = "B";
+            } else if (score >= 70) {
+                grade = "C";
+            } else if (score >= 60) {
+                grade = "D";
+            } else {
+                grade = "F";
+            }
+            document.getElementById('result').innerText = `Your grade is: ${grade}`;
+        }
+    </script>
+</body>
+</html>
