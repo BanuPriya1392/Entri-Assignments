@@ -52,5 +52,23 @@
     "productName": "Chicken Pizza",
     "description": "Pizza topped with chicken",
     "Stock": false
+  },
+  {
+    "product_Id": "11",
+    "productName": "momos",
+    "description": "popular snack",
+    "Stock": true
+  },
+  {
+    "product_Id": "12",
+    "productName": "chicken momos",
+    "description": "popular non-veg snacks",
+    "Stock": true
+  },
+  {
+    "product_Id": "13",
+    "productName": "chicken sandwich",
+    "description": "popular non-veg snacks",
+    "Stock": true
   }
 ]
